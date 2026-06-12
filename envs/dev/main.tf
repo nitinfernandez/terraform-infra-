@@ -8,6 +8,24 @@ module "vpc" {
 
 }
 
+
+module "sg" {
+  source = "../../modules/security-group"
+
+  name   = "dev-sg"
+  vpc_id = module.vpc.vpc_id
+
+  ingress_rules = [
+    {
+      from_port = 22
+      to_port   = 22
+      protocol  = "tcp"
+      cidr      = "0.0.0.0/0"
+    }
+  ]
+}
+
+
 module "ec2" {
   source = "../../modules/ec2"
 
@@ -15,4 +33,6 @@ module "ec2" {
   instance_type = "t2.micro"
   subnet_id     = module.vpc.subnet_id
   name          = "dev-ec2"
+
+    security_group_ids = [module.sg.id]
 }

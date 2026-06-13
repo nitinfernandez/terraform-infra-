@@ -1,20 +1,14 @@
 module "vpc" {
-    
   source = "../../modules/vpc"
 
-  cidr        = "10.0.0.0/16"
-
-  
-  subnet_cidr = "10.0.1.0/24"
-
+  cidr = "10.0.0.0/16"
 
   subnet_cidrs = [
     "10.0.1.0/24",
     "10.0.2.0/24"
   ]
 
-  name        = "dev-vpc"
-
+  name = "dev-vpc"
 }
 
 
@@ -23,15 +17,6 @@ module "sg" {
 
   name   = "dev-sg"
   vpc_id = module.vpc.vpc_id
-
-  ingress_rules = [
-    {
-      from_port = 22
-      to_port   = 22
-      protocol  = "tcp"
-      cidr      = "0.0.0.0/0"
-    }
-  ]
 }
 
 

@@ -3,9 +3,15 @@ module "vpc" {
 
   cidr = "10.0.0.0/16"
 
+  
+
   subnet_cidrs = [
     "10.0.1.0/24",
     "10.0.2.0/24"
+  ]
+   availability_zones = [
+    "us-east-1a",  # ✅ ADD THIS
+    "us-east-1b"   # ✅ Different AZ
   ]
 
   name = "dev-vpc"
@@ -34,7 +40,7 @@ module "asg" {
   source = "../../modules/asg"
 
   name               = "dev-asg"
-  ami                = "ami-xxxxxxxx"
+  ami                = "ami-0521cb2d60cfbb1a6"
   instance_type      = "t2.micro"
   subnet_ids         = module.vpc.subnet_ids
   security_group_ids = [module.sg.id]
